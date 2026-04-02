@@ -14,7 +14,7 @@ export default function ResponseExplorer({ runId }) {
     }
   }, [responses])
 
-  if (responses === undefined) return <div className="explorer explorer--loading"><p className="status">Loading...</p></div>
+  if (responses === undefined) return <div className="explorer explorer--loading" />
   if (responses.length === 0) return <div className="explorer" ref={containerRef}><p className="status">No responses found.</p></div>
 
   const sorted = [...responses].sort((a, b) => b.slop_hits.length - a.slop_hits.length).slice(0, 5)

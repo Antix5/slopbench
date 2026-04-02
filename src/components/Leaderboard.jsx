@@ -68,6 +68,10 @@ export default function Leaderboard() {
   const [activeTab, setActiveTab] = useState('slop')
   const [asc, setAsc] = useState(true)
   const [selectedRunId, setSelectedRunId] = useState(null)
+  const [hoveredRunId, setHoveredRunId] = useState(null)
+
+  // Prefetch on hover
+  useQuery(api.runs.getResponsesByRunId, hoveredRunId ? { runId: hoveredRunId } : 'skip')
 
   if (runs === undefined) return <p className="status">Loading leaderboard...</p>
   if (runs.length === 0) return <p className="status">No completed runs yet.</p>
@@ -126,6 +130,8 @@ export default function Leaderboard() {
                   <React.Fragment key={run._id}>
                     <tr
                       onClick={() => setSelectedRunId(isSelected ? null : run._id)}
+                      onMouseEnter={() => setHoveredRunId(run._id)}
+                      onMouseLeave={() => setHoveredRunId(null)}
                       className={isSelected ? 'selected' : ''}
                     >
                       <td className="col-rank">{i + 1}</td>
